@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-once>{{title}}</h1>
+        <h2 v-once>{{content}}</h2>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: "dyrektywa v-once",
+                content: "dyrektywa v-once - działa raz -> bez aktualizacji wartości"
+            }
+        })
+    </script>
+</body>
+</html>

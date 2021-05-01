@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-html="title"></h1>
+        <h2 v-html="content"></h2>
+
+        <h2>samochód: {{ getCar}} </h2>
+        <h2>rok produkcji: {{getYear }} </h2>
+
+        <h2>samochód: {{ getCar}} </h2>
+        <h2>rok produkcji: {{getYear }} </h2>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'computed properties',
+                content: "zamiast funkcji można użyć obiektu computed",
+                type: "Fiat",
+                year: 1989,
+                model: "Panda"
+            },
+            computed: {
+                getCar: function () {
+                    var car = "To jest auto: " + this.type + "" + this.model
+                    console.log(car)
+                },
+                getYear: function () {
+                    var year = "To jest rok: " + this.year
+                    console.log(year)
+                    return year
+                }
+            }
+        })
+    </script>
+</body>
+</html>

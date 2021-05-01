@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        let licznik = 0;
+        let rect = {sx:0, sy:0, kx:0, ky:0, rysuje: 0}
+        let klik = {x:0, y:0}
+        $(document).ready(function(){
+            /*$("#pole1").on("click", function(){
+                //alert("klikniety pierwszy kwadrat")
+                console.log($(this).width())
+            })*/
+            $("#pole1").on("mousedown", function (e) {
+                let x = parseInt(e.clientX - parseInt($("#pole1").offset().left))
+                let y = parseInt(e.clientY - parseInt($("#pole1").offset().top))
+                klik.x = x;
+                klik.y = y;
+                rect.sx = x;
+                rect.sy = y;
+                rect.rysuje = 1;
+                console.log(x,y)
+                const start = Date.now()
+                let rectangle = $(`<div class="rect" id="kw_${licznik}">`)
+                let css = {
+                    position: "absolute",
+                    left: rect.sx,
+                    top: rect.sy,
+                    width: 0,
+                    height: 0
+                }
+                console.log(css)
+                rectangle.css(css)
+                $("#pole1").append(rectangle)
+            })
+ 
+            $("#pole1").on("mousemove", function (e) {
+                if (rect.rysuje == 1){
+                    let x = parseInt(e.clientX - parseInt($("#pole1").offset().left))
+                    let y = parseInt(e.clientY - parseInt($("#pole1").offset().top))
+                    if(x>=klik.x){
+                        rect.kx = x;
+                    } else {
+                        rect.sx = x;
+                        rect.kx = klik.x;
+                    }
+                    if (y >= klik.y){
+                        rect.ky = y;
+                    } else {
+                        rect.ky = klik.y;
+                        rect.sy = y;
+                    }
+                    console.log(rect)
+                    let rectangle = $(`#kw_${licznik}`)
+                    let css = {
+                        position: "absolute",
+                        left: rect.sx,
+                        top: rect.sy,
+                        width: rect.kx-rect.sx,
+                        height: rect.ky-rect.sy
+                    }
+                    console.log(css)
+                    rectangle.css(css)
+                }
+            })
+            
+            
+            $("#pole1").on("mouseup", function (e) {
+                if (rect.rysuje == 1){
+                    let x = parseInt(e.clientX - parseInt($("#pole1").offset().left))
+                    let y = parseInt(e.clientY - parseInt($("#pole1").offset().top))
+                    if(x>=klik.x){
+                        rect.kx = x;
+                    } else {
+                        rect.sx = x;
+                        rect.kx = klik.x;
+                    }
+                    if (y >= klik.y){
+                        rect.ky = y;
+                    } else {
+                        rect.ky = klik.y;
+                        rect.sy = y;
+                    }
+                    rect.rysuje = 0;
+
+                    console.log(x,y)
+                    let rectangle = $(`#kw_${licznik}`)
+                    let css = {
+                        position: "absolute",
+                        left: rect.sx,
+                        top: rect.sy,
+                        width: rect.kx-rect.sx,
+                        height: rect.ky-rect.sy
+                    }
+
+                    console.log(css)
+                    rectangle.css(css)
+
+                    place = {sx: rect.sx, sy: rect.sy, kx: rect.kx, ky: rect.ky}
+                
+                    $.ajax({
+                        url: "/rectangle",
+                        data: place,
+                        type: "POST",
+                        success: function (data) {
+                            const end = Date.now()
+
+                            //czytamy odesłane z serwera dane
+
+                            var obj = JSON.parse(data)
+                            let rectangle = $(`<div class="rect" id="kw_${licznik}_${licznik}">`)
+                            let css = {
+                                position: "absolute",
+                                left: rect.sx,
+                                top: rect.sy,
+                                width: rect.kx-rect.sx,
+                                height: rect.ky-rect.sy
+                            }
+                            console.log(css, $("#pole2").offset())
+                            rectangle.css(css)
+                            $("#pole2").append(rectangle)
+                            
+                            //alert("odebrałem obliczenia z serwera")
+
+                            //tu wypisz sumę w div-ie na stronie
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr);
+                        },
+                    });
+                    licznik++
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="pole1" class="pole"></div>
+    <br>
+    <div id="pole2" class="pole"></div>
+</body>
+</html>

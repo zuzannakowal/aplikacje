@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <a v-bind:href="link">
+            <img v-bind:src="image" />
+        </a>
+        <a v-bind:href="getLink()">
+            <img v-bind:src="getImage()" />
+        </a>
+        <a :href="getLink()">
+            <img v-bind:src="getImage()" />
+        </a>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                link: "https://vuejs.org/",
+                image: "https://vuejs.org/images/logo.png"
+            },
+            methods: {
+                getLink: function () {
+                    return this.link
+                },
+                getImage: function () {
+                    return this.image
+                },
+            }
+        })
+    </script>
+</body>
+</html>

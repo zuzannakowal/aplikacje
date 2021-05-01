@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 20px;
+            width: 60px;
+            background-color: cornflowerblue;
+            color: coral;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#bt1").click(function(){
+                const sendObj = { txt1: $("#txt1").val(), txt2: $("#txt2").val() }
+                console.log("klik", sendObj)
+                $.ajax({
+                    url: "/obliczenia",
+                    data: sendObj,
+                    type: "POST",
+                    success: function (data) {
+
+                        //czytamy odesłane z serwera dane
+                        console.log("otrzymalam: ", data)
+
+                        var obj = JSON.parse(data)
+
+                        alert("odebrałem obliczenia z serwera: " + obj.iloczyn)
+
+                        //tu wypisz sumę w div-ie na stronie
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                    },
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <form method="POST">
+        <input type="text" name="txt1" id="txt1">
+        <input type="text" name="txt2" id="txt2">
+    </form> 
+    <div id="bt1">click me!</div>
+</body>
+</html>

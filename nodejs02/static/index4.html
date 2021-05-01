@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            width: 300px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            /*$("#range1").change(function(){
+                alert("changed " + $("#range1").val())
+            })*/
+            $("#range1").on('input change',function(){
+                console.log("changed value to: " +  $("#range1").val())
+                //$("#range2").val($("#range1").val())
+                var wartosc = {val: $("#range1").val()}
+                $.ajax({
+                    url: "/suwaki",
+                    data: wartosc,
+                    type: "POST",
+                    success: function (data) {
+
+                        //czytamy odesłane z serwera dane
+
+                        var obj = JSON.parse(data)
+
+                        //alert("odebrałem obliczenia z serwera")
+                        $("#range2").val(obj.val)
+
+                        //tu wypisz sumę w div-ie na stronie
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                    },
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="range" id="range1" min="0" max="10" step="0.01">
+    <br><br>
+    <input type="range" id="range2" min="0" max="10" step="0.01">
+</body>
+</html>

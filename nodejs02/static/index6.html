@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            /*$("#pole1").on("click", function(){
+                //alert("klikniety pierwszy kwadrat")
+                console.log($(this).width())
+            })*/
+            $("#pole1").on("mousemove", function (e) {
+                let x = parseInt(e.clientX - parseInt($("#pole1").offset().left))
+                let y = parseInt(e.clientY - parseInt($("#pole1").offset().top))
+                console.log(x,y)
+                place = {x: x, y: y}
+                const start = Date.now()
+                let kolko = $(`<div class="circle">`)
+                    kolko.html(x + ", " + y)
+                let css = {
+                    position: "absolute",
+                    left: parseInt(x) + parseInt($("#pole1").offset().left)-10,
+                    top: parseInt(y) + parseInt($("#pole1").offset().top)-10
+                }
+                console.log(css)
+                kolko.css(css)
+                $("#pole1").append(kolko)
+                $.ajax({
+                    url: "/move",
+                    data: place,
+                    type: "POST",
+                    success: function (data) {
+                        const end = Date.now()
+
+                        //czytamy odesłane z serwera dane
+
+                        var obj = JSON.parse(data)
+                        console.log("otrzymane: ", obj, end - start)
+                        let kolko = $(`<div class="circle">`)
+                        let css = {
+                            position: "absolute",
+                            left: parseInt(obj.x) + parseInt($("#pole2").offset().left)-10,
+                            top: parseInt(obj.y) + parseInt($("#pole2").offset().top)-10
+                        }
+                        console.log(css, $("#pole2").offset())
+                        kolko.css(css)
+                        var time = end - start
+                        kolko.html(time)
+                        $("body").append(kolko)
+                        
+                        //alert("odebrałem obliczenia z serwera")
+
+                        //tu wypisz sumę w div-ie na stronie
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                    },
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="pole1"></div>
+    <br>
+    <div id="pole2"></div>
+</body>
+</html>

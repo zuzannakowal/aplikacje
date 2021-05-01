@@ -1,0 +1,35 @@
+div{
+    height: 250px;
+    width: 250px;
+    background-color: cornflowerblue;
+}
+
+.kolko{
+    border-radius: 90px;
+    background-color: coral;
+    height: 30px;
+    width: 30px;
+    font-size: 9px;
+    text-align: center;
+}
+
+.circle{
+    border-radius: 90px;
+    background-color: coral;
+    height: 14px;
+    width: 14px;
+    font-size: 5px;
+    text-align: center;
+    border: orchid 1px solid;
+}
+
+.rect{
+    background-color: coral;
+    font-size: 5px;
+    text-align: center;
+    border: orchid 1px solid;
+}
+
+.pole{
+    position: relative;
+}

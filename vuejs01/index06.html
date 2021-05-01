@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-html="title"></h1>
+        <h2 v-html="content"></h2>
+        
+        <h2>Komunikat z pola txt: {{ message }}</h2>
+
+        <input v-model="message" type="text">
+
+        <h5>Wybrane z selecta: {{ selected }}</h5>
+
+        <select v-model="selected">
+        <option>aaa</option>
+        <option>bbb</option>
+        <option>ccc</option>
+        </select>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'dyrektywa v-model',
+                content: "dyrektywa v-model - umożliwia dwukierunkowe wiązanie: dane->interfejs, interfejs->dane działa to bez wykonywania jakichkolwiek zdarzeń, funkcji",
+                message: "zawartość pola txt",
+                selected: ""
+            }
+        })
+    </script>
+</body>
+</html>

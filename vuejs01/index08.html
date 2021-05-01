@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-html="title"></h1>
+        <h2 v-html="content"></h2>
+        
+        <ul>
+            <li>{{ array[0] }}</li>
+            <li>{{ array[1] }}</li>
+            <li>{{ array[2] }}</li>
+        </ul>
+
+        <ul>
+            <li v-for="item in array">{{item}}</li>
+        </ul>
+        
+        <ul>
+            <li v-for="item of array2">{{item}}</li>
+        </ul>
+
+        <ul>
+            <li v-for="(item,i) in array2">{{i}}:{{item}}</li>
+        </ul>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'tablice i  dyrektywa v-for',
+                content: "Dyrektywa v-for - umożliwia iterację po wartościach tablicy i wiązanie dwukierunkowe",
+                array: [1, 2, 3, 4, 5],
+                array2: ["a", "b", "c"]
+            }
+        })
+    </script>
+</body>
+</html>

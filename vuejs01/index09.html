@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-html="title"></h1>
+        <h2 v-html="content"></h2>
+
+        <ul>
+            <li v-for="item in array">{{item}}</li>
+        </ul>
+         
+        <ul>
+            <li v-for="item in array">{{item.a}} {{item.b}}</li>
+        </ul>
+         
+        <ul>
+            <li v-for="(item,i) in array">{{i}}: {{item.a}} {{item.b}}</li>
+        </ul>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'tablice obiektów i  dyrektywa v-for',
+                content: "",
+                array: [{ a: 1, b: 4 }, { a: 2, b: 5 }, { a: 3, b: 6 }]
+            }
+        })
+    </script>
+</body>
+</html>
