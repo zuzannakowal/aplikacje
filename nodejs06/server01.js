@@ -2,6 +2,10 @@ var http = require("http");
 var qs = require("querystring");
 var fs = require("fs");
 
+var autka = require("./dane.json")
+
+console.log(autka)
+
 function servResponse(req,res){
     var allData = "";
     // kiedy przychodzą dane POSTEM, w postaci pakietów,
@@ -39,6 +43,10 @@ var server = http.createServer(function(req,res){
                         res.write(data);
                         res.end();
                     })
+                    break;
+                case "/api":
+                    res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
+                    res.end(JSON.stringify(autka))
                     break;
                 default:
                     res.writeHead(404);
