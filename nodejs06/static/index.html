@@ -6,14 +6,31 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript">
       function syncFetch(){
-        alert("syncFetch")
+        const body = JSON.stringify({a: 3, imie: "marek"})
+        const headers = {"Content-Type": "application/json"}
+
+        const req = {method: "post", body, headers}
+        fetch("/api", req)
+          .then(response => response.json())
+          .then(data => console.log("dostalem: ", data.imie))
       }
-      function asyncFetch(){
-        alert("asyncFetch")
+      async function asyncFetch(){
+        const body = JSON.stringify({a: 6, nazwisko: "kowal"})
+        const headers = {"Content-Type": "application/json"}
+
+        let response = await fetch("/api", {method: "post", body, headers})
+        if(!response.ok)
+          return response.status
+        else
+          return await response.json()
+
       }
       $(document).ready(function(){
         $("#bt1").click(syncFetch)
-        $("#bt2").click(asyncFetch)
+        $("#bt2").click(async function(){
+          let json = await asyncFetch()
+          console.log(json)
+        })
       })
     </script>
 

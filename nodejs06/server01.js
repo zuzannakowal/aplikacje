@@ -17,10 +17,12 @@ function servResponse(req,res){
     // i odsyłamy do przeglądarki
 
     req.on("end", function (data) {
-        var finish = qs.parse(allData)
-        console.log(finish)
+      console.log(allData)
+        var finish = JSON.parse(allData)
         console.log("odsyłam: ", finish)
-        res.end(JSON.stringify(finish));
+        setTimeout(function(){
+          res.end(JSON.stringify(finish));
+        }, 5000)
     })
 }
 
@@ -47,13 +49,14 @@ var server = http.createServer(function(req,res){
             break;
         case "POST":
             switch(req.url){
-                case "/obliczenia":
+                case "/api":
                     servResponse(req,res)
                     break;
                 default:
                     res.writeHead(404)
                     res.write("to nie istnieje")
                     res.end()
+                    console.log("404")
             }
             break;
 
