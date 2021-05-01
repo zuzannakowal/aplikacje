@@ -5,10 +5,15 @@
     <title></title>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript">
+      function syncFetch(){
+        alert("syncFetch")
+      }
+      function asyncFetch(){
+        alert("asyncFetch")
+      }
       $(document).ready(function(){
-        $("#bt1").click(() => {alert("bt1")})
-        $("#bt2").click(() => {alert("bt2")})
-
+        $("#bt1").click(syncFetch)
+        $("#bt2").click(asyncFetch)
       })
     </script>
 
