@@ -1,33 +1,24 @@
 var http = require("http");
 var qs = require("querystring");
 var fs = require("fs");
+const formidable = require('formidable');
 
 var autka = require("./dane.json")
 
 console.log(autka)
 
 function servResponse(req,res){
-    var allData = "";
-    // kiedy przychodzą dane POSTEM, w postaci pakietów,
-    // łącza się po kolei do jednej zmiennej "allData"
-    // w poniższym zdarzeniu req.on nic nie modyfikujemy!
-
-    req.on("data", function (data) {
-        console.log("data: " + data)
-        allData += data;
-    })
-    // kiedy przyjdą już wszystkie dane
-    // parsujemy je do obiektu "finish"
-    // i odsyłamy do przeglądarki
-
-    req.on("end", function (data) {
-      console.log(allData)
-        var finish = JSON.parse(allData)
-        console.log("odsyłam: ", finish)
-        setTimeout(function(){
-          res.end(JSON.stringify(finish));
-        }, 5000)
-    })
+        let form = formidable({})
+        form.uploadDir = "static/upload/"
+        form.parse(req, function(err, fields, files){
+        console.log(err)
+        console.log(files.file.name)
+          res.writeHead(200, {'content-type': 'application/json'})
+          res.end(JSON.stringify({
+            title: "file uploaded",
+            name: files.file.name,
+            date: files.file.lastModifiedDate}));
+        })
 }
 
 var server = http.createServer(function(req,res){
@@ -44,9 +35,35 @@ var server = http.createServer(function(req,res){
                         res.end();
                     })
                     break;
+                case "/default":
+                    fs.readFile("static/pieski.jpeg", function(error, data){
+                        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                        res.write(data);
+                        res.end();
+                    })
+                    break;
+                case "/pieskia":
+                    fs.readFile("static/kicia.jpeg", function(error, data){
+                        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                        res.write(data);
+                        res.end();
+                    })
+                    break;
                 case "/api":
                     res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
                     res.end(JSON.stringify(autka))
+                    break;
+                case "/all":
+                    res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
+                    res.end(JSON.stringify(autka))
+                    break;
+                case "/first":
+                    res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
+                    res.end(JSON.stringify([autka[0]]))
+                    break;
+                case "/honda":
+                    res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
+                    res.end(JSON.stringify([autka[0], autka[1]]))
                     break;
                 default:
                     res.writeHead(404);

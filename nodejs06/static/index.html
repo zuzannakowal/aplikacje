@@ -9,21 +9,49 @@
         const body = JSON.stringify({a: 3, imie: "marek"})
         const headers = {"Content-Type": "application/json"}
 
-        const req = {method: "post", body, headers}
+        const req = {method: "get", headers}
+        console.log(req)
         fetch("/api", req)
           .then(response => response.json())
-          .then(data => console.log("dostalem: ", data.imie))
+          .then(data => console.log("dostalem: ", data))
       }
       async function asyncFetch(){
         const body = JSON.stringify({a: 6, nazwisko: "kowal"})
         const headers = {"Content-Type": "application/json"}
 
-        let response = await fetch("/api", {method: "post", body, headers})
+        let response = await fetch("/api", {method: "get", headers})
         if(!response.ok)
           return response.status
         else
           return await response.json()
 
+      }
+      function sendFile(){
+        var fd = new FormData()
+
+        fd.append("file", $("#myfile")[0].files[0])
+
+        fetch("/api", {method: "post", body: fd})
+            .then(response => response.json())
+            .then(data => {
+              console.log("dane: ", data)
+              $("#uploadInfo").html(`title: ${data.title}<br>name: ${data.name}<br>date: ${data.date}`)
+            })
+            .catch(error => console.log("error: ", error))
+      }
+      function fetchFile(){
+        fetch("/pieskia", {mode: 'cors'})
+          .then(response => response.blob())
+          .then(blob => {
+            console.log(blob)
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function(){
+              console.log(reader.result)
+              $("#pieski").attr('src', reader.result)
+            })
+            reader.readAsDataURL(blob)
+          })
       }
       $(document).ready(function(){
         $("#bt1").click(syncFetch)
@@ -31,12 +59,24 @@
           let json = await asyncFetch()
           console.log(json)
         })
+        $("#upload").click(sendFile)
+        $("#btA").click(fetchFile)
       })
     </script>
 
   </head>
   <body>
     <button id="bt1" type="button" name="button">sync</button>
-    <button id="bt2" type="button" name="button">async</button>
+    <button id="bt2" type="button" name="button">async</button><br>
+    <a href="/all">all</a>
+    <a href="/first">first</a>
+    <a href="/honda">honda</a><br>
+    <input type="file" id="myfile" name="myfile"><br>
+    <button id="upload" type="button" name="button">przeslij</button>
+    <div id="uploadInfo">file info</div><br>
+
+    <img id="pieski" src="default" alt=""><br>
+    <button id="btA" type="button" name="button">a</button>
+
   </body>
 </html>
