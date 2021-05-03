@@ -1,0 +1,15 @@
+{
+  "name": "nodejs06",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server01.js",
+  "dependencies": {
+    "formidable": "^1.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
