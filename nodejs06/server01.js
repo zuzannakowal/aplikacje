@@ -63,7 +63,7 @@ var server = http.createServer(function(req,res){
                     break;
                 case "/honda":
                     res.writeHead(200, {'content-type': 'application/json; charset=utf-8'});
-                    res.end(JSON.stringify([autka[0], autka[1]]))
+                    res.end(JSON.stringify(autka.filter(elem => elem.car_name == "Honda")))
                     break;
                 default:
                     res.writeHead(404);
